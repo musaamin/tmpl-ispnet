@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISPnet - Enterprise Internet Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        }
+                    },
+                    boxShadow: {
+                        'premium': '0 25px 50px -12px rgba(0, 0, 0, 0.08)',
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.03)',
+                        'card-hover': '0 25px 50px -12px rgba(14, 165, 233, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-overlay { background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.85) 100%); }
+        .gradient-text { background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .card-premium { background: white; border: 1px solid rgba(0, 0, 0, 0.05); transition: all 0.3s ease; }
+        .card-premium:hover { transform: translateY(-4px); box-shadow: 0 25px 50px -12px rgba(14, 165, 233, 0.15); }
+        .section-pattern { background-image: radial-gradient(circle at 1px 1px, rgba(14, 165, 233, 0.08) 1px, transparent 0); background-size: 40px 40px; }
+        .floating { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+        @keyframes pulse-slow { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+    </style>
+</head>
+<body class="font-sans text-dark-800 antialiased" x-data="{ mobileMenu: false }">
+    <!-- Navigation -->
+    <nav class="glass-nav fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-wifi text-white text-lg"></i>
+                    </div>
+                    <span class="font-heading font-bold text-xl text-dark-900">ISPnet</span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#hero" class="text-dark-700 hover:text-primary-600 font-medium transition">Beranda</a>
+                    <a href="#about" class="text-dark-700 hover:text-primary-600 font-medium transition">Tentang</a>
+                    <a href="#services" class="text-dark-700 hover:text-primary-600 font-medium transition">Layanan</a>
+                    <a href="#testimonials" class="text-dark-700 hover:text-primary-600 font-medium transition">Testimoni</a>
+                    <a href="https://wa.me/6281234567890" target="_blank" class="flex items-center space-x-2 bg-primary-600 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-primary-700 transition shadow-lg shadow-primary-500/30">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>0812-3456-7890</span>
+                    </a>
+                </div>
+
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 text-dark-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div x-show="mobileMenu" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-2"
+             class="md:hidden glass-nav border-t">
+            <div class="px-4 py-4 space-y-2">
+                <a href="#hero" class="block px-4 py-2 text-dark-700 font-medium">Beranda</a>
+                <a href="#about" class="block px-4 py-2 text-dark-700 font-medium">Tentang</a>
+                <a href="#services" class="block px-4 py-2 text-dark-700 font-medium">Layanan</a>
+                <a href="#testimonials" class="block px-4 py-2 text-dark-700 font-medium">Testimoni</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center" style="background-image: url('images/hero.jpg'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 hero-overlay"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
+                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                        <span class="text-white/90 text-sm font-medium">Trusted by 10,000+ Customers</span>
+                    </div>
+                    <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                        Koneksi Internet
+                        <span class="gradient-text">Enterprise-Grade</span>
+                        untuk Bisnis Anda
+                    </h1>
+                    <p class="text-lg text-gray-300 mb-8 max-w-xl">
+                        Rasakan kecepatan dan stabilitas internet premium dengan infrastruktur fiber optic tercanggih. Didukung tim support 24/7 untuk kebutuhan bisnis Anda.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#services" class="flex items-center space-x-2 bg-white text-dark-900 px-7 py-3.5 rounded-full font-semibold hover:bg-gray-100 transition shadow-xl">
+                            <span>Lihat Paket</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="https://wa.me/6281234567890" target="_blank" class="flex items-center space-x-2 bg-green-500 text-white px-7 py-3.5 rounded-full font-semibold hover:bg-green-600 transition shadow-lg shadow-green-500/30">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                            <span>Chat WhatsApp</span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center gap-8 mt-10 pt-10 border-t border-white/10">
+                        <div>
+                            <div class="text-3xl font-bold text-white">99.9%</div>
+                            <div class="text-sm text-gray-400">Uptime SLA</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-white">1 Gbps</div>
+                            <div class="text-sm text-gray-400">Max Speed</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-white">24/7</div>
+                            <div class="text-sm text-gray-400">Support</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden lg:block floating">
+                    <img src="images/about.jpg" alt="Enterprise Network" class="rounded-2xl shadow-2xl shadow-black/30 border border-white/10">
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="scrollToSection('features')" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/80 hover:text-white transition cursor-pointer">
+            <div class="w-10 h-16 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
+                <div class="w-1.5 h-3 bg-white rounded-full animate-bounce"></div>
+            </div>
+        </button>
+        <script>
+            function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+        </script>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 section-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-primary-600 font-semibold text-sm uppercase tracking-wider">Keunggulan</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-dark-900 mt-3 mb-4">Mengapa Memilih ISPnet?</h2>
+                <p class="text-gray-600 text-lg">Kami menghadirkan solusi internet enterprise dengan kualitas terbaik untuk mendukung produktivitas bisnis Anda.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card-premium p-8 rounded-2xl text-center">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-tachometer-alt text-2xl text-primary-600"></i>
+                    </div>
+                    <h3 class="font-heading text-lg font-semibold text-dark-900 mb-3">Kecepatan Maksimal</h3>
+                    <p class="text-gray-600 text-sm">Up to 1 Gbps symmetric bandwidth untuk kebutuhan bandwidth-intensif</p>
+                </div>
+                <div class="card-premium p-8 rounded-2xl text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-server text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-heading text-lg font-semibold text-dark-900 mb-3">Redundansi Jaringan</h3>
+                    <p class="text-gray-600 text-sm">Multiple backbone connectivity dengan failover otomatis</p>
+                </div>
+                <div class="card-premium p-8 rounded-2xl text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-headset text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="font-heading text-lg font-semibold text-dark-900 mb-3">NOC 24/7</h3>
+                    <p class="text-gray-600 text-sm">Network Operations Center siaga 24 jam untuk monitoring proaktif</p>
+                </div>
+                <div class="card-premium p-8 rounded-2xl text-center">
+                    <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-shield-alt text-2xl text-orange-600"></i>
+                    </div>
+                    <h3 class="font-heading text-lg font-semibold text-dark-900 mb-3">Enterprise SLA</h3>
+                    <p class="text-gray-600 text-sm">Service Level Agreement dengan jaminan uptime 99.9%</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <img src="images/office.jpg" alt="ISPnet Office" class="rounded-2xl shadow-premium w-full">
+                    <div class="absolute -bottom-8 -right-8 bg-dark-900 text-white p-6 rounded-2xl shadow-xl">
+                        <div class="text-3xl font-bold">15+</div>
+                        <div class="text-sm text-gray-400">Tahun Pengalaman</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-primary-600 font-semibold text-sm uppercase tracking-wider">Tentang Kami</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-dark-900 mt-3 mb-6">
+                        Partner Teknologi Terpercaya untuk Bisnis Anda
+                    </h2>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                        Sejak 2010, ISPnet telah menjadi pemimpin dalam penyediaan solusi internet enterprise di Indonesia. Kami memahami bahwa internet bukan lagi kebutuhan lux, melainkan infrastruktur vital untuk operasional bisnis modern.
+                    </p>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                        Dengan jaringan fiber optic yang mencakup 50+ titik di seluruh Indonesia, kami siap memberikan koneksi stabil dan cepat untuk mendukung pertumbuhan bisnis Anda.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-check text-primary-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-dark-900">Visi</h4>
+                                <p class="text-sm text-gray-600">Menjadi provider internet terdepan di Asia Tenggara</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-bullseye text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-dark-900">Misi</h4>
+                                <p class="text-sm text-gray-600">Memberikan solusi connectivity terbaik</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl sm:text-5xl font-bold text-white mb-2">10K+</div>
+                    <div class="text-gray-400">Pelanggan Aktif</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl sm:text-5xl font-bold text-white mb-2">50+</div>
+                    <div class="text-gray-400">Kota Cakupan</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl sm:text-5xl font-bold text-white mb-2">500+</div>
+                    <div class="text-gray-400">Korporasi</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl sm:text-5xl font-bold text-white mb-2">99.9%</div>
+                    <div class="text-gray-400">Uptime Guaranteed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 section-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-primary-600 font-semibold text-sm uppercase tracking-wider">Paket Layanan</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-dark-900 mt-3 mb-4">Solusi Sesuai Kebutuhan</h2>
+                <p class="text-gray-600 text-lg">Pilih paket yang sesuai dengan kebutuhan bisnis Anda</p>
+            </div>
+            
+            <!-- Residential Plans -->
+            <div class="mb-16">
+                <h3 class="font-heading text-2xl font-bold text-dark-900 mb-8 text-center">Paket Rumah</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card-premium rounded-2xl overflow-hidden">
+                        <div class="p-6 text-center border-b border-gray-100">
+                            <h4 class="font-heading text-lg font-semibold text-dark-900">Starter</h4>
+                            <div class="mt-4">
+                                <span class="text-4xl font-bold text-dark-900">50</span>
+                                <span class="text-gray-500"> Mbps</span>
+                            </div>
+                            <div class="text-2xl font-bold text-primary-600 mt-1">Rp199rb<span class="text-sm text-gray-500 font-normal">/bln</span></div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3 mb-6 text-sm text-gray-600">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Download 50 Mbps</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Upload 25 Mbps</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>UnlimitedQuota</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Support 24/7</li>
+                            </ul>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="block w-full py-3 rounded-xl font-semibold text-center transition border-2 border-dark-900 text-dark-900 hover:bg-dark-900 hover:text-white">Pilih Paket</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-premium rounded-2xl ring-2 ring-primary-500 relative shadow-card-hover">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                            <span class="bg-primary-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow-lg">POPULER</span>
+                        </div>
+                        <div class="p-8 text-center">
+                            <h4 class="font-heading text-lg font-semibold text-dark-900">Home Basic</h4>
+                            <div class="mt-4">
+                                <span class="text-4xl font-bold text-dark-900">100</span>
+                                <span class="text-gray-500"> Mbps</span>
+                            </div>
+                            <div class="text-2xl font-bold text-primary-600 mt-1">Rp349rb<span class="text-sm text-gray-500 font-normal">/bln</span></div>
+                            <ul class="space-y-3 mt-6 mb-6 text-sm text-gray-600">
+                                <li class="flex items-center justify-center"><i class="fas fa-check text-green-500 mr-2"></i>Download 100 Mbps</li>
+                                <li class="flex items-center justify-center"><i class="fas fa-check text-green-500 mr-2"></i>Upload 50 Mbps</li>
+                                <li class="flex items-center justify-center"><i class="fas fa-check text-green-500 mr-2"></i>UnlimitedQuota</li>
+                                <li class="flex items-center justify-center"><i class="fas fa-check text-green-500 mr-2"></i>Free WiFi 6 Router</li>
+                            </ul>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="block w-full py-3 rounded-xl font-semibold text-center bg-primary-600 text-white hover:bg-primary-700 transition shadow-lg shadow-primary-500/30">Pilih Paket</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-premium rounded-2xl overflow-hidden">
+                        <div class="p-6 text-center border-b border-gray-100">
+                            <h4 class="font-heading text-lg font-semibold text-dark-900">Home Premium</h4>
+                            <div class="mt-4">
+                                <span class="text-4xl font-bold text-dark-900">300</span>
+                                <span class="text-gray-500"> Mbps</span>
+                            </div>
+                            <div class="text-2xl font-bold text-primary-600 mt-1">Rp549rb<span class="text-sm text-gray-500 font-normal">/bln</span></div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3 mb-6 text-sm text-gray-600">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Download 300 Mbps</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Upload 150 Mbps</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>UnlimitedQuota</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Free WiFi 6 Router</li>
+                            </ul>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="block w-full py-3 rounded-xl font-semibold text-center transition border-2 border-dark-900 text-dark-900 hover:bg-dark-900 hover:text-white">Pilih Paket</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-premium rounded-2xl overflow-hidden">
+                        <div class="p-6 text-center border-b border-gray-100">
+                            <h4 class="font-heading text-lg font-semibold text-dark-900">Home Ultimate</h4>
+                            <div class="mt-4">
+                                <span class="text-4xl font-bold text-dark-900">500</span>
+                                <span class="text-gray-500"> Mbps</span>
+                            </div>
+                            <div class="text-2xl font-bold text-primary-600 mt-1">Rp799rb<span class="text-sm text-gray-500 font-normal">/bln</span></div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3 mb-6 text-sm text-gray-600">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Download 500 Mbps</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Upload 250 Mbps</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Priority Support</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Free WiFi 6 Pro</li>
+                            </ul>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="block w-full py-3 rounded-xl font-semibold text-center transition border-2 border-dark-900 text-dark-900 hover:bg-dark-900 hover:text-white">Pilih Paket</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Business Plans -->
+            <div>
+                <h3 class="font-heading text-2xl font-bold text-dark-900 mb-8 text-center">Paket Bisnis</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="card-premium rounded-2xl p-8">
+                        <h4 class="font-heading text-xl font-bold text-dark-900 mb-2">Business Basic</h4>
+                        <div class="text-3xl font-bold text-primary-600 mb-2">100<span class="text-lg text-gray-500 font-normal"> Mbps</span></div>
+                        <p class="text-gray-500 mb-6">Mulai dari Rp2jt/bln</p>
+                        <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Symmetric 100 Mbps</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Static IP Address</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>SLA 99.5%</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Free Installation</li>
+                        </ul>
+                        <a href="https://wa.me/6281234567890" target="_blank" class="block w-full py-3 rounded-xl font-semibold text-center transition border-2 border-dark-900 text-dark-900 hover:bg-dark-900 hover:text-white">Hubungi Sales</a>
+                    </div>
+                    
+                    <div class="card-premium rounded-2xl p-8 ring-2 ring-primary-500 relative shadow-card-hover">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <span class="bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-semibold">REKOMENDASI</span>
+                        </div>
+                        <h4 class="font-heading text-xl font-bold text-dark-900 mb-2">Business Pro</h4>
+                        <div class="text-3xl font-bold text-primary-600 mb-2">300<span class="text-lg text-gray-500 font-normal"> Mbps</span></div>
+                        <p class="text-gray-500 mb-6">Mulai dari Rp5jt/bln</p>
+                        <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Symmetric 300 Mbps</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>5 Static IP Addresses</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>SLA 99.9%</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Dedicated Support 24/7</li>
+                        </ul>
+                        <a href="https://wa.me/6281234567890" target="_blank" class="block w-full py-3 rounded-xl font-semibold text-center bg-primary-600 text-white hover:bg-primary-700 transition shadow-lg shadow-primary-500/30">Hubungi Sales</a>
+                    </div>
+                    
+                    <div class="card-premium rounded-2xl p-8">
+                        <h4 class="font-heading text-xl font-bold text-dark-900 mb-2">Enterprise</h4>
+                        <div class="text-3xl font-bold text-primary-600 mb-2">1<span class="text-lg text-gray-500 font-normal"> Gbps+</span></div>
+                        <p class="text-gray-500 mb-6">Custom Pricing</p>
+                        <ul class="space-y-3 mb-8 text-sm text-gray-600">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Custom Bandwidth</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Unlimited Static IP</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>SLA 99.99%</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Dedicated Account Manager</li>
+                        </ul>
+                        <a href="https://wa.me/6281234567890" target="_blank" class="block w-full py-3 rounded-xl font-semibold text-center transition border-2 border-dark-900 text-dark-900 hover:bg-dark-900 hover:text-white">Hubungi Sales</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-primary-400 font-semibold text-sm uppercase tracking-wider">Testimoni</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white mt-3 mb-4">Apa Kata Klien Kami</h2>
+                <p class="text-gray-400 text-lg">Pengalaman klien yang telah menggunakan layanan ISPnet</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-dark-800 rounded-2xl p-8 border border-dark-700">
+                    <div class="flex items-center mb-6">
+                        <img src="images/testimonial1.jpg" alt="Rahmat Hidayat" class="w-14 h-14 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-semibold text-white">Rahmat Hidayat</h4>
+                            <p class="text-sm text-gray-400">CEO, Tech Startup</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"ISPnet memberikan koneksi yang sangat stabil untuk operasional cloud kami. Tidak ada downtime signifikan selama 2 tahun. Sangat direkomendasikan untuk perusahaan tech."</p>
+                </div>
+                
+                <div class="bg-dark-800 rounded-2xl p-8 border border-dark-700">
+                    <div class="flex items-center mb-6">
+                        <img src="images/testimonial2.jpg" alt="Maya Putri" class="w-14 h-14 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-semibold text-white">Maya Putri</h4>
+                            <p class="text-sm text-gray-400">Content Creator</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"Upload video 4K jadi sangat cepat! Support juga sangat responsif. Sebagai content creator, internet reliable itu sangat penting untuk workflow saya."</p>
+                </div>
+                
+                <div class="bg-dark-800 rounded-2xl p-8 border border-dark-700">
+                    <div class="flex items-center mb-6">
+                        <img src="images/testimonial3.jpg" alt="Budi Prasetyo" class="w-14 h-14 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-semibold text-white">Budi Prasetyo</h4>
+                            <p class="text-sm text-gray-400">IT Director, Korporasi</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"Migrasi ke ISPnet adalah keputusan terbaik. Latency rendah ke server internasional sangat membantu operasi global kami. SLA yang dijunjung benar-benar ditegakkan."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-gradient-to-r from-primary-600 to-primary-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white mb-4">Siap Meningkatkan Koneksi Bisnis Anda?</h2>
+            <p class="text-primary-100 text-lg mb-8">Konsultasikan kebutuhan internet perusahaan Anda dengan tim ahli kami</p>
+            <a href="https://wa.me/6281234567890" target="_blank" class="inline-flex items-center space-x-2 bg-white text-dark-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition shadow-xl">
+                <i class="fab fa-whatsapp text-2xl text-green-500"></i>
+                <span>Hubungi: 0812-3456-7890</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 text-gray-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-wifi text-white text-lg"></i>
+                        </div>
+                        <span class="font-heading font-bold text-xl text-white">ISPnet</span>
+                    </div>
+                    <p class="text-sm mb-6 leading-relaxed">Penyedia solusi internet enterprise dengan infrastruktur fiber optic terbaik di Indonesia.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-heading font-semibold text-white mb-6">Menu</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#hero" class="hover:text-white transition">Beranda</a></li>
+                        <li><a href="#about" class="hover:text-white transition">Tentang Kami</a></li>
+                        <li><a href="#services" class="hover:text-white transition">Layanan</a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition">Testimoni</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-heading font-semibold text-white mb-6">Layanan</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#services" class="hover:text-white transition">Internet Rumah</a></li>
+                        <li><a href="#services" class="hover:text-white transition">Internet Bisnis</a></li>
+                        <li><a href="#services" class="hover:text-white transition">Dedicated Internet</a></li>
+                        <li><a href="#services" class="hover:text-white transition">Colocation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-heading font-semibold text-white mb-6">Kontak</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary-500"></i>
+                            <span>Jl. Sudirman No. 123<br>Jakarta Selatan 12345</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-primary-500"></i>
+                            <span>(021) 1234-5678</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary-500"></i>
+                            <span>info@example.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-whatsapp mr-3 text-green-500"></i>
+                            <span class="text-white">0812-3456-7890</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm mb-4 md:mb-0">&copy; 2026 ISPnet. All rights reserved.</p>
+                <p class="text-sm">Design by <a href="https://www.bitnesia.com" target="_blank" class="text-primary-500 hover:text-primary-400 transition font-semibold">Bitnesia</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/6281234567890" target="_blank" class="fixed bottom-8 right-8 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-green-500/40 z-50 hover:bg-green-600 transition hover:scale-110">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+</body>
+</html>
